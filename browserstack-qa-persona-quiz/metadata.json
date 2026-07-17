@@ -1,0 +1,6 @@
+{
+  "name": "BrowserStack QA Persona Quiz",
+  "description": "An interactive BuzzFeed-style quiz to discover your QA testing superpower for BrowserStack's 15th Birthday.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
