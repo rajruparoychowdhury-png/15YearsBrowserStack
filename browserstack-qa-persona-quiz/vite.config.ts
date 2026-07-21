@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/15YearsBrowserStack/browserstack-qa-persona-quiz/',
+    base: '/15YearsBrowserStack/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
