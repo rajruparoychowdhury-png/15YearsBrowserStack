@@ -1,5 +1,30 @@
 @import "tailwindcss";
 
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100%;
+  overscroll-behavior-y: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+* {
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 @layer utilities {
   .gradient-bg {
     background: linear-gradient(135deg, #faf5ff 0%, #f5f3ff 50%, #eff6ff 100%);
@@ -11,11 +36,16 @@
     background: linear-gradient(135deg, #fff1f2 0%, #faf5ff 50%, #eff6ff 100%);
   }
   .glow-hover {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    touch-action: manipulation;
   }
-  .glow-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(167, 139, 250, 0.25);
+  /* Only apply hover-lift on devices that actually support hover (mouse/trackpad).
+     On touch devices this rule previously fired on tap, causing a stuck/janky
+     transform state that never fully released until a second tap elsewhere. */
+  @media (hover: hover) and (pointer: fine) {
+    .glow-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(167, 139, 250, 0.25);
+    }
   }
 }
-
