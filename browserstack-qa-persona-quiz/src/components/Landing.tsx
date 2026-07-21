@@ -80,7 +80,7 @@ export const Landing: React.FC<LandingProps> = ({ onStart }) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onStart}
-          className="gradient-accent text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:opacity-95 transition-all glow-hover"
+          className="gradient-accent text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:opacity-95 transition-all glow-hover touch-manipulation"
         >
           Start Assessment
         </motion.button>
@@ -88,4 +88,3 @@ export const Landing: React.FC<LandingProps> = ({ onStart }) => {
     </div>
   );
 };
-
