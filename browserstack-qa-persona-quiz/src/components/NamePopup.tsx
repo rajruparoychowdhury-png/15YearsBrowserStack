@@ -58,14 +58,14 @@ export const NamePopup: React.FC<NamePopupProps> = ({ isOpen, onClose, onSubmit 
                   <button
                     type="button"
                     onClick={onClose}
-                    className="w-1/2 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 transition-colors"
+                    className="w-1/2 py-3 rounded-xl border border-slate-200 text-slate-600 font-semibold hover:bg-slate-50 transition-colors touch-manipulation"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={!name.trim()}
-                    className="w-1/2 py-3 rounded-xl gradient-accent text-white font-bold hover:opacity-95 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-1/2 py-3 rounded-xl gradient-accent text-white font-bold hover:opacity-95 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation"
                   >
                     Let's Go!
                   </button>
@@ -78,4 +78,3 @@ export const NamePopup: React.FC<NamePopupProps> = ({ isOpen, onClose, onSubmit 
     </AnimatePresence>
   );
 };
-

@@ -63,10 +63,13 @@ export default function App() {
   };
 
   return (
-    <div className="gradient-bg min-h-screen font-sans text-slate-800 antialiased overflow-x-hidden flex flex-col justify-between relative">
-      {/* Background Decorative Blur circles as styled in original theme */}
-      <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-pink-300 blur-[100px] opacity-30 pointer-events-none z-0"></div>
-      <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full bg-blue-300 blur-[100px] opacity-30 pointer-events-none z-0"></div>
+    <div className="gradient-bg min-h-dvh font-sans text-slate-800 antialiased overflow-x-hidden flex flex-col justify-between relative">
+      {/* Background Decorative Blur circles as styled in original theme.
+          Fixed (not absolute) so they sit in their own compositing layer and
+          never repaint on scroll; smaller + lighter blur on small screens
+          keeps mobile GPUs from dropping frames while scrolling. */}
+      <div className="fixed top-[-80px] left-[-80px] w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] rounded-full bg-pink-300 blur-[60px] sm:blur-[100px] opacity-30 pointer-events-none z-0 will-change-transform"></div>
+      <div className="fixed bottom-[-80px] right-[-80px] w-[250px] h-[250px] sm:w-[400px] sm:h-[400px] rounded-full bg-blue-300 blur-[60px] sm:blur-[100px] opacity-30 pointer-events-none z-0 will-change-transform"></div>
 
       <div className="max-w-4xl w-full mx-auto px-4 py-8 flex-grow flex flex-col justify-between relative z-10">
         {/* Header / Logo */}

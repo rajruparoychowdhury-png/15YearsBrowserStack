@@ -55,7 +55,7 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
         {currentQuestionIndex > 0 ? (
           <button
             onClick={handleGoBack}
-            className="flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors py-1.5 px-3 rounded-lg hover:bg-slate-50 active:bg-slate-100 cursor-pointer"
+            className="flex items-center gap-1.5 text-sm font-semibold text-slate-500 hover:text-indigo-600 transition-colors py-1.5 px-3 rounded-lg hover:bg-slate-50 active:bg-slate-100 cursor-pointer touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Back
@@ -121,4 +121,3 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
     </div>
   );
 };
-
