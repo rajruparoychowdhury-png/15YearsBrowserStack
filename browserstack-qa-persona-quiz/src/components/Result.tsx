@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import confetti from "canvas-confetti";
-import html2canvas from "html2canvas";
+import html2canvas from "html2canvas-pro";
 import { ResultCard } from "./ResultCard";
 import { PERSONAS } from "../data/quizData";
 
@@ -53,79 +53,12 @@ export const Result: React.FC<ResultProps> = ({ name, personaId, onReset }) => {
 
   const handleDownload = async () => {
     if (!cardRef.current) return;
-    
-    let isRedefined = false;
-    try {
-      try {
-        Object.defineProperty(document, 'styleSheets', {
-          get: () => [],
-          configurable: true
-        });
-        isRedefined = true;
-      } catch (e) {
-        console.error("Failed to redefine document.styleSheets", e);
-      }
 
+    try {
       const canvas = await html2canvas(cardRef.current, {
         scale: 3, // very high resolution
         backgroundColor: null,
         useCORS: true,
-        onclone: (clonedDoc, clonedElement) => {
-          const originalElement = cardRef.current;
-          if (!originalElement || !clonedElement) return;
-
-          try {
-            Object.defineProperty(clonedDoc, 'styleSheets', {
-              get: () => [],
-              configurable: true
-            });
-          } catch (e) {
-            console.error("Failed to redefine clonedDoc.styleSheets", e);
-          }
-
-          const inlineStyles = (original: Element, cloned: Element) => {
-            const computed = window.getComputedStyle(original);
-            
-            const propertiesToCopy = [
-              "position", "top", "left", "right", "bottom", "width", "height",
-              "margin", "padding", "display", "flex-direction", "justify-content",
-              "align-items", "flex-grow", "flex-shrink", "flex-wrap", "background",
-              "background-color", "background-image", "border", "border-radius",
-              "border-top", "border-bottom", "border-left", "border-right",
-              "border-color", "border-width", "border-style",
-              "color", "font-family", "font-size", "font-weight", "line-height",
-              "text-align", "text-transform", "letter-spacing", "box-shadow",
-              "overflow", "opacity", "mix-blend-mode", "transform", "gap",
-              "align-self", "justify-self", "max-width", "max-height", "min-width", "min-height",
-              "aspect-ratio", "fill", "stroke", "stroke-width", "stroke-linecap", "stroke-linejoin"
-            ];
-            
-            const clonedStyle = (cloned as any).style;
-            if (clonedStyle) {
-              for (const prop of propertiesToCopy) {
-                const val = computed.getPropertyValue(prop);
-                if (val) {
-                  clonedStyle.setProperty(prop, val);
-                }
-              }
-            }
-
-            const originalChildren = Array.from(original.children);
-            const clonedChildren = Array.from(cloned.children);
-            
-            for (let i = 0; i < originalChildren.length; i++) {
-              if (originalChildren[i] && clonedChildren[i]) {
-                inlineStyles(originalChildren[i], clonedChildren[i]);
-              }
-            }
-          };
-
-          inlineStyles(originalElement, clonedElement);
-
-          // Remove style and link tags in the cloned document so html2canvas doesn't try to parse them
-          const stylesheets = clonedDoc.querySelectorAll("style, link[rel='stylesheet']");
-          stylesheets.forEach(s => s.remove());
-        }
       });
       const dataUrl = canvas.toDataURL("image/png");
       const link = document.createElement("a");
@@ -134,14 +67,6 @@ export const Result: React.FC<ResultProps> = ({ name, personaId, onReset }) => {
       link.click();
     } catch (error) {
       console.error("Error generating image:", error);
-    } finally {
-      if (isRedefined) {
-        try {
-          delete (document as any).styleSheets;
-        } catch (e) {
-          console.error("Failed to restore document.styleSheets", e);
-        }
-      }
     }
   };
 
@@ -248,4 +173,3 @@ export const Result: React.FC<ResultProps> = ({ name, personaId, onReset }) => {
     </div>
   );
 };
-
