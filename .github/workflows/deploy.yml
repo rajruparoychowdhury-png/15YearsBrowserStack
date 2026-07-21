@@ -21,18 +21,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies
         working-directory: ./browserstack-qa-persona-quiz
-        run: npm ci
+        run: bun install
 
       - name: Build
         working-directory: ./browserstack-qa-persona-quiz
-        run: npm run build
+        run: bun run build
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
