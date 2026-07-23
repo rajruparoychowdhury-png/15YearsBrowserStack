@@ -84,7 +84,7 @@ export const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(({ name, p
 
       {/* Card Bottom: User Name and URL */}
       <div className="border-t border-slate-200/60 pt-2.5 mt-2 flex flex-col items-center justify-center text-center">
-        <p id="card-user-name" className="text-lg font-black text-indigo-950 truncate max-w-full leading-none pb-1">
+        <p id="card-user-name" className="text-lg font-black text-indigo-950 truncate max-w-full leading-normal pt-1 pb-1">
           {name}
         </p>
         <div className="w-full border-t border-slate-200/60 my-2"></div>
