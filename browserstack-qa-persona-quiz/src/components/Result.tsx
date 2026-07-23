@@ -60,11 +60,14 @@ export const Result: React.FC<ResultProps> = ({ name, personaId, onReset }) => {
         backgroundColor: null,
         useCORS: true,
       });
-      const dataUrl = canvas.toDataURL("image/png");
+      const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+      if (!blob) throw new Error("Failed to generate image blob");
+      const blobUrl = URL.createObjectURL(blob);
       const link = document.createElement("a");
       link.download = `BrowserStack-QA-Superpower-${name.replace(/\s+/g, '-')}.png`;
-      link.href = dataUrl;
+      link.href = blobUrl;
       link.click();
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
     } catch (error) {
       console.error("Error generating image:", error);
     }
@@ -73,11 +76,43 @@ export const Result: React.FC<ResultProps> = ({ name, personaId, onReset }) => {
   const testURL = window.location.href.split('#')[0];
   const shareText = `I just found out my QA Superpower is ${persona.title} on BrowserStack's 15th Birthday Persona Quiz! 🚀 Find yours too: ${testURL} #15YearsofBrowserStack`;
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(shareText).then(() => {
-      setIsCopied(true);
+  const handleCopy = async () => {
+    const fallbackCopy = () => {
+      const textarea = document.createElement("textarea");
+      textarea.value = shareText;
+      // Keep it in the viewport (off-screen elements are ignored by iOS Safari's copy command)
+      textarea.style.position = "fixed";
+      textarea.style.top = "0";
+      textarea.style.left = "0";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+      let succeeded = false;
+      try {
+        succeeded = document.execCommand("copy");
+      } catch {
+        succeeded = false;
+      }
+      document.body.removeChild(textarea);
+      return succeeded;
+    };
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(shareText);
+        setIsCopied(true);
+      } else if (fallbackCopy()) {
+        setIsCopied(true);
+      }
+    } catch {
+      if (fallbackCopy()) {
+        setIsCopied(true);
+      }
+    } finally {
       setTimeout(() => setIsCopied(false), 2000);
-    });
+    }
   };
 
   const shareOnLinkedIn = () => {
