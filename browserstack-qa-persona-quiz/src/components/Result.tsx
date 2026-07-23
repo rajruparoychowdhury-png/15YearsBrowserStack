@@ -161,10 +161,10 @@ export const Result: React.FC<ResultProps> = ({ name, personaId, onReset }) => {
         {/* Share Segment */}
         <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm space-y-4 text-left">
           <h3 className="font-bold text-indigo-950 text-base flex items-center gap-2">
-            <span>Share Your Superpower on LinkedIn!</span>
+            <span>Share Your Superpower!</span>
           </h3>
           <p className="text-xs text-slate-500">
-            Celebrate BrowserStack's 15th Birthday by sharing your verified QA persona with your professional network.
+            Celebrate BrowserStack's 15th Birthday by sharing your QA persona with your network. Don't forget to tag BrowserStack and attach your Superpower Card!
           </p>
           
           <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-100 text-xs text-slate-600 font-mono relative pr-12 break-words">
